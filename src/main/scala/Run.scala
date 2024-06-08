@@ -3,36 +3,38 @@ import BinaryTree._
 object Runner {
   def main(args: Array[String]): Unit = {
     val root = generateTree
-    traverseInOrder(root, n => print(n.value + ", "))
-    println()
-    println(s"Height: ${height2(root)}")
-    println(s"IsBalanced: ${isBalanced(root)}")
+    println(root.foldValuesNRL(Vector.newBuilder[Int])(_.addOne(_)).result().mkString(", "))
+    println(s"Height: ${height0(root)} / ${height1(root)}")
+    println(s"IsBalanced: ${isBalanced0(root)} / ${isBalanced1(root)}")
+
+    println(render0(root))
   }
 
   def generateTree: BinaryTree[Int] = {
-    val n6 =
-      Node(
-        6,
-        Node(271, 28, 0),
-        Node.rightOnly(
-          561,
-          Node.leftOnly(3, 17)
-        )
-      )
-
-    val n6i = Node(
-      6,
-      Node.rightOnly(
-        2,
-        Node(
-          1,
-          Node.rightOnly(401, 641),
-          Node(257)
+    import BinaryTree.builderSyntax._
+    314.branch(
+      6.branch(
+        271.branch(
+          28.leaf,
+          0.leaf
+        ),
+        561.right(
+          3.left(
+            17.leaf
+          )
         )
       ),
-      Node.rightOnly(271, 28)
+      6.branch(
+        2.right(
+          1.branch(
+            401.right(
+              641.leaf
+            ),
+            257.leaf
+          )
+        ),
+        271.right(28.leaf)
+      )
     )
-
-    Node(314, n6, n6i)
   }
 }
